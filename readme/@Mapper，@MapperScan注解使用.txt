@@ -1,0 +1,60 @@
+======@MapperScan注解使用
+
+===@Mapper注解：
+作用：在接口类上添加了@Mapper，在编译之后会生成相应的接口实现类
+添加位置：接口类上面
+
+@Mapper
+public interface UserDAO {
+   //代码
+}
+如果想要每个接口都要变成实现类，那么需要在每个接口类上加上@Mapper注解，
+比较麻烦，解决这个问题用@MapperScan
+
+
+===@MapperScan
+作用：指定要变成实现类的接口所在的包，然后包下面的所有接口在编译之后都会生成相应的实现类
+添加位置：是在Springboot启动类上面添加，
+
+@SpringBootApplication
+@MapperScan("com.winter.dao")
+public class SpringbootMybatisDemoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootMybatisDemoApplication.class, args);
+    }
+}
+
+添加@MapperScan(“com.winter.dao”)注解以后，com.winter.dao包下面的接口类，
+在编译之后都会生成相应的实现类
+
+
+===使用@MapperScan注解多个包
+（实际用的时候根据自己的包路径进行修改）
+
+@SpringBootApplication  
+@MapperScan({"com.kfit.demo","com.kfit.user"})  
+public class App {  
+    public static void main(String[] args) {  
+       SpringApplication.run(App.class, args);  
+    }  
+} 
+
+
+===使用@MapperScan注解注意事项
+
+Spring boot不建议使用XML文件配置，mybatis推荐使用mybatis的官方推荐的
+mybatis-spring-boot-starter与Spring boot整合，直接在mapper文件中采用注解的形式操作数据库@Select等等，
+@MapperScan扫描的是mapper.xml中namespace指向值的包位置，
+在mapper.xml中有这么一句话<mapper namespace="xx.xxx.mapper.XXXMapper" >,
+那么@MapperScan(“xx.xxx.mapper”)。
+
+//不需要加任何注解，也不需要对应的 .xml文件
+public interface TestMapper{
+     @Select("select username from user")
+     List<User> getUserList(String userId);
+ 
+}
+
+
+

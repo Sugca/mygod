@@ -1,0 +1,69 @@
+=====SpringBoot中使用Servlet
+在SpringBootApplication上使用@ServletComponentScan注解后，
+Servlet、Filter、Listener可以直接通过@WebServlet、@WebFilter、@WebListener注解自动注册，无需其他代码。
+
+===在入口Application类上加入注解@ServletComponentScan
+@SpringBootApplication
+@ServletComponentScan
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+===新建Servlet类，继承HttpServlet并且加入注解@WebServlet(name=“TestServlet”,urlPatterns="/test")
+@WebServlet(name="TestServlet",urlPatterns="/test")
+public class TestServlet extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+    		throws ServletException, IOException {
+        	System.out.println("doGet");
+    }
+}
+
+之后运行代码，在浏览器地址栏输入http://localhost:8080/test，
+若看到控制台打印doGet，则表示Servlet创建成功。
+
+
+注意：
+(1)如果不加@ServletComponentScan注解则会报404即找不到页面，
+控制台也扫描不到我们配置的servlet：/test，即无法被映射
+(2)如果Application类和Servlet类不在同一包下，则@ServletComponentScan需要添加相应的路径，
+如Application类在包com.hui.xiao下，则写为@ServletComponentScan(“com.hui.xiao”)或@ServletComponentScan(“com.hui”)
+
+
+=====Spring, Spring Boot中的@ComponentScan注解用法介绍
+如果你理解了ComponentScan，你就理解了Spring.
+Spring是一个依赖注入(dependency injection)框架。所有的内容都是关于bean的定义及其依赖关系。
+定义Spring Beans的第一步是使用正确的注解-@Component或@Service或@Repository.
+但是，Spring不知道你定义了某个bean除非它知道从哪里可以找到这个bean.
+ComponentScan做的事情就是告诉Spring从哪里找到bean
+
+由你来定义哪些包需要被扫描。一旦你指定了，Spring将会将在被指定的包及其下级的包(sub packages)中寻找bean
+
+注：@ComponentScan的不同写法
+1.@ComponentScan({“com.xiao.hui”,“com.xiao.qiang”})
+或@ComponentScan(basePackages = {“com.xiao.hui”,“com.xiao.qiang”})
+2.@ComponentScan(“com.xiao”)或@ComponentScan(value = “com.xiao”)
+或@ComponentScan(basePackages = { “com.xiao” })
+3.@ComponentScan(basePackageClasses＝要扫描类.class所在位置的包) 意思是要扫描哪个类所在的包，
+如@ComponentScan(basePackageClasses＝hehe.class)，这种写法不如上面的那种写法好有局限性
+
+
+===使用@ComponentScan自动扫描组件实例
+包扫描会扫描只要标注了@Controller,@Service,@Repository,@Component这四个注解都会被扫描到容器中。
+1、@Controller 控制器（注入服务）
+用于标注控制层，相当于struts中的action层
+2、@Service 服务（注入dao）
+用于标注服务层，主要用来进行业务的逻辑处理
+3、@Repository（实现dao访问）
+用于标注数据访问层，也可以说用于标注数据访问组件，即DAO组件.
+4、@Component （把普通pojo实例化到spring容器中，相当于配置文件中的<bean id="" class=""/>）
+泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Service等的时候），我们就可以使用@Component来标注这个类。
+
+
+
