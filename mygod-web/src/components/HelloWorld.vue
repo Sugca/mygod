@@ -14,7 +14,7 @@
 
       methods: {
           pay:function() {
-            this.axios.get('http://localhost:8082/api')
+            this.axios.get('http://localhost:8081/api')
                 .then(function (resp) {
                     alert(resp)
                 })

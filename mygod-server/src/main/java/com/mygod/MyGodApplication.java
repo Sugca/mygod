@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) //去掉数据源
+//@SpringBootApplication
 //@MapperScan({"ins"})
 @ComponentScan(basePackages = {"com.common.*","com.mygod.*"})
 @ServletComponentScan
@@ -21,6 +21,6 @@ public class MyGodApplication {
 		SpringApplication.run(MyGodApplication.class, args);
 
 //		new SpringApplicationBuilder(SpringBootApplication.class)
-//				.properties("spring.config.location=classpath:/application-dev.properties").run(args);
+//				.properties("spring.config.location=classpath:/application-dev.properties.bak").run(args);
 	}
 }
