@@ -1,7 +1,10 @@
 package com.mygod.login.po;
 
+import com.baomidou.mybatisplus.annotations.TableName;
+
 import java.io.Serializable;
 
+@TableName(value = "gm_user")
 public class GmUser implements Serializable {
 
     private int id;

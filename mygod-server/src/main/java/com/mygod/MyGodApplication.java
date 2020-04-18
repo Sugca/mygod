@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) //去掉数据源
-//@SpringBootApplication
-//@MapperScan({"ins"})
+//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) //去掉数据源
+@SpringBootApplication
+@MapperScan({"com.mygod.login.dao"})
 @ComponentScan(basePackages = {"com.common.*","com.mygod.*"})
-@ServletComponentScan
+//@ServletComponentScan
 //@Profile("prod")	//选择运行环境
 //@PropertySource(value = "classath:application.yml",ignoreResourceNotFound = true,encoding = "UTF-8")
 public class MyGodApplication {
