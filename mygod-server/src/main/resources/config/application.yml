@@ -1,0 +1,8 @@
+#端口
+server:
+  port: 8083
+
+#引入jdbc配置(application-jdbc)(文件要在同级目录下)
+spring:
+  profiles:
+    include: jdbc
